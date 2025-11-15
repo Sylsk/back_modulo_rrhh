@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Solo la aplicación NestJS (usa tu BD Neon existente)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rrhh_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-3004}:3004"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+    networks:
+      - rrhh_network
+
+networks:
+  rrhh_network:
+    driver: bridge
